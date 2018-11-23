@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drag and Drop API Test</title>
+    <style>
+    .drop-zone
+    {
+        border: 2px dashed grey;
+        width:100px;
+        height:100px;
+    }
+    .drop-zone-dropping
+    {
+        background-color: lightgray;
+    }
+    #dropZone2
+    {
+        margin-top:50px;
+    }
+    .draggable-item
+    {
+        width:50px;
+        height:50px;
+    }
+    #draggableItem1
+    {
+        background:red;
+    }
+    .draggable-item-hidden
+    {
+        display:none;
+    }
+    </style>
+</head>
+<body>
+    <h1 id="droppedPageCount">Dropped 0 time(s)</h1>
+    <div id="dropZone1" class="drop-zone"> </div>
+    <div id="draggableItem1"  draggable="true" class="draggable-item"> </div>
+</body>
+
+<script>
+    var dropCounter = 0;
+    var dropZone1 = document.getElementById("dropZone1");
+    var draggableItem1 = document.getElementById("draggableItem1");
+    var header = document.getElementById("droppedPageCount");
+
+    //page title details
+    var numberPlaceHolder = "{numberOfDrops}";
+    var titleTemplate = "Drag and Drop API Test ({numberOfDrops})";
+    var headerTemplate = "Dropped {numberOfDrops} time(s)";
+
+ 
+    //register drag events for item
+    draggableItem1.ondragstart  = function (event)
+    {
+        event.dataTransfer.effectAllowed = "move";
+        console.log("on drag start");
+    };
+    
+
+    //register dropzone events
+    dropZone1.ondragenter = function(event)
+    {
+        console.log("DropZone 1 Drag enter")
+        this.classList.add("drop-zone-dropping")
+        event.preventDefault();
+    };
+
+    dropZone1.ondragover = function(event)
+    {
+        event.preventDefault();
+    };
+
+    dropZone1.ondragleave = function(event)
+    {
+        this.classList.remove("drop-zone-dropping");
+    };
+
+    dropZone1.ondrop = function(event)
+    {
+        this.classList.remove("drop-zone-dropping");
+        UpdateStateAfterDrop();
+    };
+
+    function UpdateStateAfterDrop()
+    {
+        dropCounter += 1;
+        UpdatePageTitle();
+        UpdatePageHeader();
+        UpdateDraggable();
+
+    };
+
+    function UpdatePageTitle()
+    {
+        document.title = titleTemplate.replace(numberPlaceHolder,dropCounter);
+    };
+    
+    function UpdatePageHeader()
+    {
+        header.innerText = headerTemplate.replace(numberPlaceHolder,dropCounter);
+    };
+
+    function UpdateDraggable()
+    {
+        draggableItem1.style.position="absolute";
+        draggableItem1.style.top = Math.floor((Math.random() * window.innerHeight) + 1) + "px";
+        draggableItem1.style.left = Math.floor((Math.random() * window.innerWidth) + 1) + "px";
+        draggableItem1.style.background = getRandomColor();
+    };
+
+    //thanks SO https://stackoverflow.com/questions/1484506/random-color-generator
+    function getRandomColor() 
+    {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+</script>
+</html>
