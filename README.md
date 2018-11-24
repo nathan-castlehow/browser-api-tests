@@ -1,2 +1,2 @@
 # browser-api-tests
-Repo for playing with browser api's
+Playground for testing and experimenting with browser api's
