@@ -57,6 +57,10 @@
         console.log("on drag start");
     };
     
+    draggableItem1.onclick = function(event)
+    {
+        this.style.background = getRandomColor();
+    };
 
     //register dropzone events
     dropZone1.ondragenter = function(event)
