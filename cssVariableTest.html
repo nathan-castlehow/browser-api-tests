@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>Css Variable Test</title>
+        <style>
+            :root
+            {
+                --main-bg-color:white;
+                --main-font-color:black;
+            }
+            body
+            {
+                background-color: var(--main-bg-color);
+                -webkit-transition: background-color 0.5s;
+                -moz-transition: background-color 0.5s;
+                transition: background-color 0.5s;
+            }
+            h1
+            {
+                font-size:16px;
+                color:var(--main-font-color)
+            }
+        </style>
+    </head>
+    <body>
+        <h1> Test Header </h1>
+        <button onclick="toggleViewMode()" type="button">Toggle View Mode </button>
+    </body>
+    <script>
+        const lightModeBgColor = 'white'
+        const lightModeFontColor = 'black'
+
+        const darkModeBgColor = 'black'
+        const darkModeFontColor = 'white'
+
+        var isLightMode = false;
+        function toggleViewMode()
+        {
+            if(isLightMode)
+            {
+                document.documentElement.style
+                .setProperty('--main-bg-color', darkModeBgColor);
+                document.documentElement.style
+                .setProperty( '--main-font-color', darkModeFontColor);
+                isLightMode = false;
+            }
+            else
+            {
+                document.documentElement.style
+                .setProperty('--main-bg-color', lightModeBgColor);
+                document.documentElement.style
+                .setProperty( '--main-font-color', lightModeFontColor);
+                isLightMode = true;
+            }
+        }
+    </script>
+</html>
